@@ -10,11 +10,10 @@
 
   <link rel="shortcut icon" type="image/x-icon" href="https://yourwebsite.com/path/to/cake-icon.ico" />
   <link rel="mask-icon" type="image/x-icon" href="https://yourwebsite.com/path/to/cake-icon.svg" color="#111" />
-  
+
   <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
 
   <title>From Gen!</title>
-
 
   <style>
     body {
@@ -81,10 +80,6 @@
     }
   </style>
 
-  <script>
-    window.console = window.console || function (t) {};
-  </script>
-
 </head>
 
 <body translate="no">
@@ -96,121 +91,142 @@
       </div>
       <!-- New button added here -->
       <button class="btn" onclick="window.location.href='birthday1.html'">Here's a simple gift for you, I hope you like it</button>
-    <div id="yesContent" style="display: none;">
-      <h1 class="header_text">Yay! Let's go out!</h1>
-      <div class="gif_container">
-        <iframe src="https://giphy.com/embed/qa98eSMXpmBH4qgMMB" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-        <p><a href="https://giphy.com/gifs/TheCheekyPanda-qa98eSMXpmBH4qgMMB">via GIPHY</a></p>
+      <div id="yesContent" style="display: none;">
+        <h1 class="header_text">Yay! Let's go out!</h1>
+        <div class="gif_container">
+          <iframe src="https://giphy.com/embed/qa98eSMXpmBH4qgMMB" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+          <p><a href="https://giphy.com/gifs/TheCheekyPanda-qa98eSMXpmBH4qgMMB">via GIPHY</a></p>
+        </div>
+        <div class="video_container">
+          <div id="audioPlayer"></div>
+        </div>
+        <button class="btn" onclick="resetContent()">Reset</button>
       </div>
-      <div class="video_container">
-        <div id="audioPlayer"></div>
+      <div id="noContent" style="display: none;">
+        <h1 class="header_text">Oh no! Why not?</h1>
+        <div class="gif_container">
+          <img src="https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif" alt="Sad animated illustration">
+        </div>
+        <button class="btn" onclick="resetContent()">Reset</button>
       </div>
-      <button class="btn" onclick="resetContent()">Reset</button>
     </div>
-    <div id="noContent" style="display: none;">
-      <h1 class="header_text">Oh no! Why not?</h1>
-      <div class="gif_container">
-        <img src="https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif" alt="Sad animated illustration">
-      </div>
-      <button class="btn" onclick="resetContent()">Reset</button>
-    </div>
-  </div>
 
-  <script src="script.js"></script>
-  <script id="rendered-js">
-    // Load the YouTube API script
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    <script src="script.js"></script>
+    <script id="rendered-js">
+      // Load the YouTube API script
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    var player;
+      var player;
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('audioPlayer', {
-        height: '0',
-        width: '0',
-        videoId: 'UiBXV0SliLA',
-        events: {
-          'onReady': onPlayerReady
-        }
-      });
-    }
-
-    function onPlayerReady(event) {
-      // Player is ready to play video
-    }
-
-    function showYesContent() {
-      document.getElementById('initialContent').style.display = 'none';
-      document.getElementById('yesContent').style.display = 'block';
-      // Play audio
-      if (player) {
-        player.playVideo();
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('audioPlayer', {
+          height: '0',
+          width: '0',
+          videoId: 'UiBXV0SliLA',
+          events: {
+            'onReady': onPlayerReady
+          }
+        });
       }
-      // Start confetti effect
-      startConfetti();
-    }
 
-    function showNoContent() {
-      document.getElementById('initialContent').style.display = 'none';
-      document.getElementById('noContent').style.display = 'block';
-    }
-
-    function resetContent() {
-      document.getElementById('yesContent').style.display = 'none';
-      document.getElementById('noContent').style.display = 'none';
-      document.getElementById('initialContent').style.display = 'block';
-      // Stop audio
-      if (player) {
-        player.stopVideo();
+      function onPlayerReady(event) {
+        // Player is ready to play video
       }
-    }
 
-    function moveButton() {
-      const button = document.getElementById('noButton');
-      const container = document.querySelector('.container');
-
-      const containerRect = container.getBoundingClientRect();
-      const buttonRect = button.getBoundingClientRect();
-
-      const maxX = containerRect.width - buttonRect.width;
-      const maxY = containerRect.height - buttonRect.height;
-
-      let newX = Math.random() * maxX;
-      let newY = Math.random() * maxY;
-
-      // Ensure the button stays within the viewport
-      newX = Math.max(0, Math.min(newX, maxX));
-      newY = Math.max(0, Math.min(newY, maxY));
-
-      button.style.transform = `translate(${newX}px, ${newY}px)`;
-    }
-
-    // Confetti effect
-    function startConfetti() {
-      var duration = 5 * 1000;
-      var animationEnd = Date.now() + duration;
-      var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-      var interval = setInterval(function () {
-        var timeLeft = animationEnd - Date.now();
-        if (timeLeft <= 0) {
-          return clearInterval(interval);
+      function showYesContent() {
+        document.getElementById('initialContent').style.display = 'none';
+        document.getElementById('yesContent').style.display = 'block';
+        // Play audio
+        if (player) {
+          player.playVideo();
         }
-        var particleCount = 50 * (timeLeft / duration);
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: 0.5, y: 0.5 } }));
-      }, 250);
-    }
+        // Start confetti effect
+        startConfetti();
+      }
 
-    // Play only audio from YouTube video
-    const videoContainer = document.querySelector('.video_container');
-    const audioPlayer = document.createElement('div');
-    audioPlayer.id = 'audioPlayer';
-    videoContainer.appendChild(audioPlayer);
-    //# sourceURL=pen.js
-  </script>
+      function showNoContent() {
+        document.getElementById('initialContent').style.display = 'none';
+        document.getElementById('noContent').style.display = 'block';
+      }
+
+      function resetContent() {
+        document.getElementById('yesContent').style.display = 'none';
+        document.getElementById('noContent').style.display = 'none';
+        document.getElementById('initialContent').style.display = 'block';
+        // Stop audio
+        if (player) {
+          player.stopVideo();
+        }
+      }
+
+      function moveButton() {
+        const button = document.getElementById('noButton');
+        const container = document.querySelector('.container');
+
+        const containerRect = container.getBoundingClientRect();
+        const buttonRect = button.getBoundingClientRect();
+
+        const maxX = containerRect.width - buttonRect.width;
+        const maxY = containerRect.height - buttonRect.height;
+
+        let newX = Math.random() * maxX;
+        let newY = Math.random() * maxY;
+
+        // Ensure the button stays within the viewport
+        newX = Math.max(0, Math.min(newX, maxX));
+        newY = Math.max(0, Math.min(newY, maxY));
+
+        button.style.transform = `translate(${newX}px, ${newY}px)`;
+      }
+
+      // Confetti effect
+      function startConfetti() {
+        var duration = 5 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        var interval = setInterval(function () {
+          var timeLeft = animationEnd - Date.now();
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+          var particleCount = 50 * (timeLeft / duration);
+          confetti(Object.assign({}, defaults, { particleCount, origin: { x: 0.5, y: 0.5 } }));
+        }, 250);
+      }
+
+      // Play only audio from YouTube video
+      const videoContainer = document.querySelector('.video_container');
+      const audioPlayer = document.createElement('div');
+      audioPlayer.id = 'audioPlayer';
+      videoContainer.appendChild(audioPlayer);
+      //# sourceURL=pen.js
+    </script>
 
 </body>
 
 </html>
+<script>
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
+  // Disable F12 key and Ctrl+Shift+I and Ctrl+U
+  document.addEventListener('keydown', function (e) {
+    // Check for F12, Ctrl+Shift+I, Ctrl+U, and Ctrl+Shift+J
+    if (e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+        (e.ctrlKey && e.key === 'U')) {
+      e.preventDefault();
+    }
+  });
+
+  // Additional protection against inspect element
+  window.onbeforeunload = function() {
+    return "Are you sure you want to leave? You might lose any unsaved changes.";
+  };
+</script>
