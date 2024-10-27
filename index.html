@@ -210,23 +210,19 @@
 
 </html>
 <script>
-  // Disable right-click context menu
-  document.addEventListener('contextmenu', function (e) {
-    e.preventDefault();
-  });
-
-  // Disable F12 key and Ctrl+Shift+I and Ctrl+U
+  // Disable F12 key, Ctrl+Shift+I, and Ctrl+U
   document.addEventListener('keydown', function (e) {
-    // Check for F12, Ctrl+Shift+I, Ctrl+U, and Ctrl+Shift+J
+    // Check for F12, Ctrl+Shift+I, and Ctrl+U
     if (e.key === 'F12' || 
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+        (e.ctrlKey && e.shiftKey && e.key === 'I') || 
         (e.ctrlKey && e.key === 'U')) {
       e.preventDefault();
     }
   });
 
-  // Additional protection against inspect element
+  // Additional protection against inspect element using F12 or other shortcuts
   window.onbeforeunload = function() {
     return "Are you sure you want to leave? You might lose any unsaved changes.";
   };
 </script>
+
