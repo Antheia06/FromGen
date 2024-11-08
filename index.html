@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" type="image/png" href="<div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/3Xx3u4AnB4MT7E7UUx" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/3Xx3u4AnB4MT7E7UUx">via GIPHY</a></p>" />
+  <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
 
   <meta name="apple-mobile-web-app-title" content="From Gen!">
 
@@ -210,19 +210,23 @@
 
 </html>
 <script>
-  // Disable F12 key, Ctrl+Shift+I, and Ctrl+U
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
+  // Disable F12 key and Ctrl+Shift+I and Ctrl+U
   document.addEventListener('keydown', function (e) {
-    // Check for F12, Ctrl+Shift+I, and Ctrl+U
+    // Check for F12, Ctrl+Shift+I, Ctrl+U, and Ctrl+Shift+J
     if (e.key === 'F12' || 
-        (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
         (e.ctrlKey && e.key === 'U')) {
       e.preventDefault();
     }
   });
 
-  // Additional protection against inspect element using F12 or other shortcuts
+  // Additional protection against inspect element
   window.onbeforeunload = function() {
     return "Are you sure you want to leave? You might lose any unsaved changes.";
   };
 </script>
-
